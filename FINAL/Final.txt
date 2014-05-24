@@ -1,0 +1,132 @@
+Abhishek Patel, 500 393 195
+Edwin Ng, 500 401 352
+Warren Pinto, 500 396 119
+Lakhveer Jajj, 500 380 580
+
+
+
+
+Toronto Aquarium 
+
+Background
+	Toronto aquarium, established in 1987 provides with an outstanding display of various kinds of aquatic creatures to our marine life loving visitors. 
+	Our great selection of creatures include: Catfish, Goldfish, Blowfish, Clownfish, Guppy, Zebra Loach, Angelfish, Puffer fish, Rainbow fish and many more. 
+	The company is located in downtown Toronto on Front Street with a view of lake Ontario. 
+
+	Company Structure
+	The company is divided into different departments such as maintenance department, finance department, human resources and customer services.
+	Our company exhibits a hierarchical structure in which each department is connected to the central managerial department at the top of the hierarchy. 
+	The top managers oversee the whole company’s operations. They deal with major decision making such as choosing suppliers, choosing products and many other tasks. 
+	Company’s finance department deals with purchase, customer sales, accounting, invoices, taxation, and employee salaries among other things. 
+	Company’s maintenance department deals with cleaning and maintaining fish tanks as well as the park itself, including the washrooms and show floors. 
+	The HR department deals with hiring new employees, training them and if need be replacing them. 
+
+Employees
+	The company currently has 40 employees divided into many sub categories, for example, manager, cleaners, sales representatives and customer service representatives. 
+	Each of these employees takes orders directly from the manager. The manager provides each department with instructions on daily basis. 
+	These employees are paid on hourly basis determined by the management. Our core employees are all full time and receive full time benefits. 
+	We also hire seasonal workers to cover for the extra busy months. 
+
+Aquarium Experience
+	There are several different fish tanks located at different areas of the store, each containing different types of fish. Each tank is labelled according to its 
+	contents for visitor convenience. These fish tanks are cleaned and maintained on regular basis. There are several customer service representatives on the floor 
+	to help the visitors. Every customer is free to walk around and look at the fish tanks. The aquarium also does school tours for children in elementary school. 
+	For those tours, we have guilds who educate the children about many different kinds of fish in the sea. 
+
+Company Policies 
+	Visitors are asked not to touch or temper with the tanks. Doing so will get them kicked out without a refund, if they were students we would kindly ask the 
+	teachers to keep an eye on them. Visitors pay for any damages they may have caused. 
+
+
+
+Functional Requirements
+
+	Manager directs employees by giving them instructions. They are also allowed access to information to employees. Finance department deals with transactions 
+	such as sales or purchases, and ticket prices. In addition, information about the company’s finances should be kept on their own system. Employees guide 
+	visitors also providing assistance when needed. Receptionist sells tickets to visitors and deals with customer service. Maintenance department maintains all tanks 
+	in the system. Tanks should be kept clean, being cleaned every week. The number of fish in each tank should be kept track of every day. Supplies should be informed 
+	when new fish are needed.
+
+
+Specifications 
+
+	Our database system will contain many features. In addition, each type of employee would have access to different features for security purposes. 
+
+	Employees
+		-allowed to query for basic information about fellow co-workers when customers request it. 
+		-allow to see cost of tickets after taxes, along with price range of tickets.
+		-check information about tanks and inventory.
+
+	Manager
+		-allowed to see all information about employee’s working under him.
+		-also allowed to search and sort through employee information.
+		-check information about tanks and inventory.
+
+	System
+		-keep track of employee and manager wages.
+		-allow simple calculations related to wages and sales.
+		-keeps track of employee in change of each tank.
+		-keeps track of the fish in each tank.
+		-keeps track of the tanks.
+		-keeps track of the number of fish in the park.
+		-fish should not be mixed and matched.
+		-has error checking, employee cannot have a negative wage, only cleaners are allowed to clean tanks, etc.
+		-when the fish in a tank all die, resupply the tank with 50 of the fish.
+
+	Finance requirements 
+		Stores transactions
+		Sales
+		Purchases 
+		Ticket prices
+		Taxes on ticket prices
+
+	Inventory requirements
+		Stores product information
+		Identification number
+		Name
+		Price
+		Quantity available
+		Customer support
+		Must hold customer information if needed
+	
+	Maintenance department
+		Stores information of last maintenance for schedule purposes
+		Tables
+
+
+Employee (Eid, Ename, City, Phone, Title, Wage)
+Inventory (Pid, Pname, Quantity)
+Tank (Tid, Pname )
+Maintenance (Tid, Eid)
+Tickets (Type, Price)
+
+
+Data Dictionary
+
+	Eid: integer
+	Ename: string
+	City: string
+	Phone: integer
+	Title: string
+	Wage: integer
+
+	Pid: integer
+	Pname: string
+	Quantity: integer
+
+	Tid: integer
+
+	Type: string
+	Price: integer
+
+
+Changes from Part 1 and Part 2 to Final
+
+	Our project over went many changes the biggest change came from redefining our queries. While previously we had 35 queries many of them were repeats, they were not 
+	unique and did not use enough of the concepts learned in class. Though it was a minor change, we also made changes to the enterprise description. We felt that the 
+	old description was lacking in some areas and had to update them. Our previous two parts lacked a specifications section, while it was in the 35 queries, we 
+	submitted in part two was not included in our report. Our tables also changed between part one, two and this final version. In part one, we only considered two tables. 
+	When part two was being worked on we increased the number of tables we had to accommodate the increase of requirements and specifications. The tables stayed the same 
+	through part two to this final version. Another big change was our menu program. For part two, we created a basic menu that created tables, populated them and dropped them. 
+	We also considered an insert option. Everything was hardcoded in our script. The final version still had insert and drop hard coded; however, we now populated the table from 
+	text files, as per the instructions and added the queries into the menu.

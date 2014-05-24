@@ -1,0 +1,389 @@
+#!/bin/bash
+
+. db2init
+db2 connect to db2data
+
+
+insert_employee(){
+	echo "Employee (EID, ENAME, CITY, PHONE, TITLE, WAGE)"
+	read param1 param2 param3 param4 param5 param6
+	db2 "INSERT INTO EMPLOYEE VALUES ( $param1, '$param2', '$param3', $param4, '$param5', $param6)"
+	#echo "" >> employee.txt
+	#echo "$param1 $param2 $param3 $param4 $param5 $param6" >> employee.txt
+}
+
+insert_inventory(){
+	echo "Inventory (PID, PNAME, QUANTITY)"
+	read param1 param2 param3
+	db2 "INSERT INTO INVENTORY VALUES ( $param1, '$param2', $param3)"
+	#echo "" >> inventory.txt
+	#echo "$param1 $param2 $param3 " >> inventory.txt
+}
+
+insert_tank(){
+	echo "Tank (TID, PNAME)"
+	read param1 param2
+	db2 "INSERT INTO TANK VALUES ( $param1, '$param2')"
+	#echo "" >> tank.txt
+	#echo "$param1 $param2" >> tank.txt
+}
+
+insert_maintenance(){
+	echo "Maintenance (TID, EID)"
+	read param1 param2
+	db2 "INSERT INTO MAINTENANCE VALUES ( $param1, $param2)"
+	#echo "" >> maintenance.txt
+	#echo "$param1 $param2" >> maintenance.txt
+}
+
+
+
+echo "CPS 510 - Database management systems"
+echo "Edwin Ng, Abhishek Patel, Warren Pinto, Lakhveer Jajj"
+while (true)
+do
+echo "Enter the number corresponding to the options listed"
+echo "1. Create (creates 5 tables)"
+echo "2. Populate (populates 5 tables)"
+echo "3. View (displays all 5 tables)"
+echo "4. Insert"
+echo "5. Drop (drops all 5 tables)"
+echo "6. Query"
+echo "0. Exit"
+
+read option
+#echo $option 
+
+if [ $option = 1 ]
+then
+	db2 "CREATE TABLE EMPLOYEE(EID integer NOT NULL PRIMARY KEY, ENAME char(15), CITY char(15), PHONE integer, TITLE char(15), WAGE integer CHECK(WAGE > 10))"
+	db2 "CREATE TABLE INVENTORY(PID integer NOT NULL  PRIMARY KEY, PNAME char(15), QUANTITY integer)"
+	db2 "CREATE TABLE TANK(TID integer, PNAME char(15))"
+	db2 "CREATE TABLE MAINTENANCE(TID integer, EID integer)"
+	db2 "CREATE TABLE TICKETS(TYPE char(10), PRICE integer)"
+	
+	
+elif [ $option = 2 ]
+then
+	while read id name city phone title wage
+	do
+		db2 "INSERT INTO EMPLOYEE VALUES ($id, '$name', '$city', $phone, '$title', $wage)"
+	done < employee.txt
+
+	while read id product quantity
+	do
+		db2 "INSERT INTO INVENTORY VALUES ($id, '$product', $quantity)"
+	done < inventory.txt
+	
+	while read tankid product
+	do
+		db2 "INSERT INTO TANK VALUES ($tankid, '$product')"
+	done < tank.txt
+
+	while read tankid employeeid
+	do
+		db2 "INSERT INTO MAINTENANCE VALUES ($tankid, $employeeid)"
+	done < maintenance.txt
+	
+	while read ticketType cost
+	do
+		db2 "INSERT INTO TICKETS VALUES ( '$ticketType', $cost)"
+	done < tickets.txt
+	
+
+elif [ $option = 3 ] 
+then
+	db2 "SELECT * FROM EMPLOYEE"
+	db2 "SELECT * FROM INVENTORY"
+	db2 "SELECT * FROM TANK"
+	db2 "SELECT * FROM MAINTENANCE"
+	db2 "SELECT * FROM TICKETS"
+elif [ $option = 4 ]
+then
+	echo "1. Employee"
+	echo "2. Inventory"
+	echo "3. Tank"
+	echo "4. Maintenance"	
+	read option 	
+	if [ $option = 1 ]
+	then
+		insert_employee
+	elif [ $option = 2 ]
+	then
+		insert_inventory
+	elif [ $option = 3 ]
+	then
+		insert_tank
+	elif [ $option = 4 ]
+	then
+		insert_maintenance
+	else
+		echo "WRONG!!!"
+	fi	
+
+elif [ $option = 5 ]
+then
+	db2 "DROP TABLE EMPLOYEE"
+	db2 "DROP TABLE INVENTORY"
+	db2 "DROP TABLE TANK"
+	db2 "DROP TABLE MAINTENANCE"
+	db2 "DROP TABLE TICKETS"
+
+elif [ $option = 6 ]
+then	
+		echo "************************** Queries without outputs******************************************"
+		echo "21. Create a view that shows only the employee names who have a higer than average pay"
+		echo "22. Create an assertion that checks that wages are greater than 0"
+		echo "23. Create a trigger that adds 50 more fishes when quantity runs out"
+		echo "24. Create an assertion that checks if only employees who are cleaners can maintain tanks"
+		echo "33. Create a view for customers who request managers name and phone number."
+		echo "********************************************************************************************"
+		
+		echo "1. List of Employee names"
+		echo "2. List of Cities where employees are from"
+		echo "3. list of ticket types with a price range between 3 and 6"
+		echo "4. List of Employees who are not from [city]"
+		echo "5. Total # of products in inventory"
+		echo "7. List of Employees and ids who are from either two cities [Toronto or Scarborough]"
+		echo "8. List of Employees and ids according to a title"
+		echo "9. List of ids, Employee names, and cities ordered by id"
+		echo "10. List of Employees according to a title or city"
+	
+		echo "11. The employee with the highest wage"
+		echo "12. Find the tank in which the Catfish is located in and its quantity in inventory"
+		echo "13. Find the employee who cleans tank number 2181"
+		echo "14. The ticket price list after taxes"
+		echo "15. The number Goldfishes in tank number 5345"
+		echo "16. The list of inventory items that is not null"
+		echo "17. The product that starts with an A and ends with o"
+		echo "18. The employee(s) whose name starts with a C"
+		echo "19. The list of employess whose wage is greater than the wages in a specific department"
+		echo "20. The list of inventory items in descending order"
+
+		echo "25. The list of inventory items if a product exists."
+		echo "26. The number of employees in each department"
+		echo "27. The average wages in each department"
+		echo "28. The highest wages in each department"
+		echo "29. The amount of employees maintaining each tank"
+		echo "30. The list of tanks that do not have cleaners assigned to them "
+		
+		echo "31. The tanks that are assigned to Cleaners"
+		echo "32. A list of fishes that are not displayed in tanks but are in inventory"
+		echo "34. Id and name of employee with id 5011 or named Larry"
+		echo "35. The lowest wage from Maintenance department."
+		echo "36. List of tanks that do not have fishes in them."
+		echo "37. Show profit or loss after employee expenses."
+		echo "38. List of employee's earnings in one month."
+
+		read option2
+		
+		if [ $option2 = 1 ] 
+		then
+			# Output a list of employees
+			db2 "SELECT ename FROM Employee"
+		elif [ $option2 = 2 ]
+		then
+			# Display all the distinct cities where the employees are from
+			db2 "SELECT DISTINCT city FROM Employee"
+		
+		elif [ $option2 = 3 ]
+		then
+			# output a list of ticket types with a price range between 3 and 6
+			db2 "SELECT Type FROM Tickets WHERE Price BETWEEN 3 AND 6"
+			
+		elif [ $option2 = 4 ]
+		then
+			# output a list of employees who lives in a city other than Toronto
+			db2 "SELECT EName FROM Employee WHERE city NOT IN('Toronto')"
+			
+		elif [ $option2 = 5 ]
+		then
+			# Get the total number of products in the inventory.
+			db2 "SELECT SUM(Quantity) As Total_Products FROM Inventory"
+			
+		elif [ $option2 = 6 ]
+		then
+			# Find the names of the employees who earn less than 15.
+			db2 "SELECT ename FROM Employee WHERE wage < 15"
+		
+		elif [ $option2 = 7 ]
+		then
+			# Find the names of all the employees and their Id’s who are located in Toronto or Scarborough.
+			db2 "SELECT ename, eid FROM Employee WHERE city IN('Toronto', 'Scarborough')"
+			
+		elif [ $option2 = 8 ]
+		then
+			# output a list of employees with their ids with the title “Cleaner”
+			db2 "SELECT eid, ename FROM Employee WHERE title='Cleaner'"
+			
+		elif [ $option2 = 9 ]
+		then
+			# Output a list of employees with their cities and their ids sorted in ascending order
+			db2 "SELECT eid, ename, city FROM Employee ORDER BY eid"
+		
+		elif [ $option2 = 10 ] 
+		then
+			# output a list of employees whose title is Manager or lives in Toronto
+			db2 "SELECT ename FROM Employee WHERE Title='Manager' UNION SELECT ename FROM Employee WHERE City='Toronto'"
+		
+		elif [ $option2 = 11 ]
+		then
+			# Find the employee who has the highest wage
+			db2 "SELECT ename FROM Employee WHERE wage >= ALL(SELECT wage FROM Employee)"
+		
+		elif [ $option2 = 12 ]
+		then
+			# Find the tank id and its quantity in which the Catfish is placed in 
+			db2 "SELECT Tank.tid, Inventory.quantity FROM Tank, Inventory WHERE Inventory.pname='Catfish' AND Inventory.pname = 'Catfish'"
+			
+		elif [ $option2 = 13 ]
+		then
+			# Find the employee name who cleans Tank Id 2181
+			db2 "SELECT Employee.ename FROM Employee, Maintenance WHERE tid=2108 AND Employee.eid=Maintenance.eid"
+			
+		elif [ $option2 = 14 ]
+		then
+			# Output a list of prices with 50% increase in each ticket price
+			db2 "SELECT Type, Price * 1.1 FROM Tickets"
+			
+		elif [ $option2 = 15 ]
+		then
+			# Find the number of Goldfishes in tank 5345 and display the quantity available in total
+			db2 "SELECT COUNT(pname) AS Goldfishes FROM Tank WHERE Tank.tid=5345"
+		
+		elif [ $option2 = 16 ]
+		then
+			# Display the list of fishes in the inventory and is not NULL
+			db2 "SELECT pname FROM Inventory WHERE pid IS NOT NULL"
+			
+		elif [ $option2 = 17 ]
+		then
+			# Display a list of name of products that start with ‘A’ and ends with ‘o’
+			db2 "SELECT pname FROM Inventory WHERE (pname LIKE 'A%') AND (pname LIKE '%o')"
+			
+		elif [ $option2 = 18 ]
+		then
+			# Display a list of employee names that start with ‘C’ 
+			db2 "SELECT ename FROM Employee WHERE (ename LIKE ‘C_’)"
+			
+		elif [ $option2 = 19 ]
+		then
+			# Display a list of employees and their phone numbers whose wage is greater than some wage who is in Sales.
+			db2 "SELECT ename, phone FROM Employee WHERE wage > ANY (SELECT wage FROM Employee WHERE title='Sales') "
+		
+		elif [ $option2 = 20 ]
+		then
+			# Output the list of fish names with quantities in descending order.
+			db2 "SELECT pid, pname, quantity FROM Inventory ORDER BY quantity DESC"
+		
+		elif [ $option2 = 21 ]
+		then
+			# Create a view that displays the employee names who have a higher than average pay.
+			db2 "CREATE VIEW greaterThanAvgPay AS SELECT ename FROM Employee WHERE wage > (SELECT AVG(Wage) FROM Employee)"
+			db2 "SELECT ename AS Employees_Greater_Than_Avg_Pay FROM greaterThanAvgPay"		
+		
+		elif [ $option2 = 22 ]
+		then
+			# Create an assertion that checks if wages are greater than 10.
+			#db2 "CREATE ASSERTION constraintWages CHECK (SELECT MIN(Wage) FROM Employee WHERE Wage > 10)"
+			echo "Not implemented here. Implemented in table"
+		
+		elif [ $option2 = 23 ]
+		then
+			# Add 50 more fishes when quantity of fish runs out.
+			db2 "CREATE TRIGGER updateQuantity AFTER UPDATE OF quantity ON Inventory FOR EACH ROW UPDATE Inventory SET quantity=50 WHERE quantity <= 50"
+
+		elif [ $option2 = 24 ]
+		then
+			# Create an assertion that checks to see if only employees who are cleaners can clean a tank.
+			#db2 "CREATE ASSERTION cleaners CHECK (SELECT maintenance.eid FROM maintenance WHERE maintenance.eid=employee.eid AND employee.eid='Cleaner')"
+			echo "Not implemented here"
+		
+		elif [ $option2 = 25 ]
+		then
+			# Find Shark if it exists in the system. If it does, find the quantity available in the system.
+			db2 "SELECT pname, quantity FROM Inventory WHERE EXISTS(SELECT pname FROM Inventory WHERE pname='Shark')"
+		
+		elif [ $option2 = 26 ]
+		then
+			# Find the number of employees in each department
+			db2 "SELECT title, COUNT(title) AS Number_In_Dept FROM employee GROUP BY title"
+		
+		elif [ $option2 = 27 ]
+		then
+			# Find the average wages for each department
+			db2 "SELECT title, AVG(wage) AS Avg_Pay FROM employee GROUP BY title"
+		
+		elif [ $option2 = 28 ]
+		then
+			# Find the greatest wage of each department
+			db2 "SELECT title, Max(wage) AS Greatest_Pay FROM employee GROUP BY title"
+		
+		elif [ $option2 = 29 ]
+		then
+			# Find the amount of employees cleaning each tank
+			db2 "SELECT tid, COUNT(tid) AS Number_of_employees FROM Maintenance GROUP BY tid"
+		
+		elif [ $option2 = 30 ]
+		then
+			# Display all the tanks that do not have cleaners assigned to them
+			db2 "SELECT tid, COUNT(tid) AS Number_of_employees FROM Maintenance GROUP BY tid HAVING COUNT(tid) = 0"
+		
+		elif [ $option2 = 31 ]
+		then
+			# Find which employees have tanks assigned to them for cleaning if they are cleaners
+			db2 "SELECT Employee.eid, Employee.ename FROM Employee, Maintenance WHERE Employee.eid=Maintenance.eid AND Employee.title='Cleaner'"
+		
+		elif [ $option2 = 32 ]
+		then
+			# Find all the fishes that are not in tanks but are in inventory
+			db2 "SELECT pname FROM Inventory EXCEPT SELECT pname FROM Tank"
+		
+		elif [ $option2 = 33 ]
+		then
+			# Create a view for customers that shows the Manager’s name and phone number
+			db2 "CREATE VIEW managerinfo AS SELECT ename, phone FROM Employee WHERE title='Manager'"
+			db2 "SELECT ename, phone FROM managerinfo"
+		
+		elif [ $option2 = 34 ]
+		then
+			# Find the id and name of employee with id 5011 or name Larry
+			db2 "SELECT eid, ename FROM Employee WHERE eid=5011 OR ename='Larry'"
+		
+		elif [ $option2 = 35 ]
+		then
+			# Find the lowest paid employee who is a Cleaner
+			db2 "SELECT Min(wage) AS Lowest_Wage_From_Dept FROM Employee WHERE title='Cleaner'"
+		
+		elif [ $option2 = 36 ]
+		then
+			# List all tank ids without fishes
+			db2 "SELECT DISTINCT  tid AS tanks_without_fishes FROM Tank WHERE Tank.pname IS NULL OR Tank.pname=''"
+		
+		elif [ $option2 = 37 ]
+		then
+			# Show profit or loss after selling 142 tickets of each type.
+			db2 "SELECT (SUM(price * 142)) - SUM(wage*8*4) AS profit_loss FROM Employee, Tickets"
+		
+		elif [ $option2 = 38 ]
+		then
+			# Show each employee’s name and total earnings for the month.
+			db2 "SELECT ename, wage*4*8 AS employee_total_earnings_$ FROM Employee"
+		else
+			echo "Invalid input"
+		fi
+		
+elif [ $option = 0 ]
+then
+	exit 0
+	
+else
+	echo "Invalid input"
+fi
+db2 "LIST TABLES"
+done
+
+
+
+
+

@@ -1,0 +1,40 @@
+Abhishek Patel, 500 393 195
+Edwin Ng, 500 401 352
+Warren Pinto, 500 396 119
+Lakhveer Jajj, 500 380 580
+
+
+
+Instructions to setup the files:
+
+NOTE: All reference images are located in folder “images” in the CD
+
+1) Log onto turing.scs.ryerson.ca with your username and password
+
+2) Move file “menu.sh” from the CD onto the server
+	
+3) Move files employee.txt, inventory.txt, maintenance.txt, tank.txt, tickets.txt from the CD onto the same directory as menu.sh was placed in from the previous step (Step 2)
+
+4) Type the command chmod 755 menu.sh
+
+5) Run the program with the following command: sh menu.sh
+
+6) After running the command, the program should run and the main-menu will be shown. 
+   Refer to file "main_menu.jpg" from 
+
+
+Instructions to navigate through the program menu.sh
+-	You will be prompted for an input after the main-menu is displayed (main_menu.jpg). Type a number from 1 to 6 to perform actions on the database. 
+-	Type 0 to exit the program
+-	Type 1 to create the 5 tables. Once you press enter, 5 tables will be created. 
+-	Once option 1 is chosen, type 2 and then press enter to populate the table.
+-		
+		-- Once the table is populated, type 3 and then enter to view the tables. Refer to file “employee_table.jpg”. 
+		   NOTE: the above mentioned files: employee.txt, inventory.txt, maintenance.txt, tank.txt, tickets.txt  MUST be located in the SAME directory as menu.sh
+		
+		-- Type 5 and then enter to drop the tables.
+		-- Type 6 for Queries. The program will then display a list of queries.
+			---Type a number from 1 to 38 to perform a query.
+			---Example: Type 13 to perform the query of option number 19. The output for the query will be shown. Refer to file “queries.jpg” and file “query_13.jpg”
+			---Example2: Type 29 to perform the query of option number 29. The output for the query will be shown. Refer to file “queries.jpg” and file “query_29.jpg"
+			---From the queries submenu, type 21, then 23, then 33 to create the views and triggers

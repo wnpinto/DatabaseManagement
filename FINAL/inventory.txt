@@ -1,0 +1,11 @@
+397243 Catfish 300 
+108201 Amango 123 
+108233 Anglefish 156 
+423424 Barfish 256 
+897659 Carpsucker 289 
+298021 Blowfish 232 
+203811 Flatloach 192 
+546584 Goldfish 546 
+397922 Grideye 213 
+698544 Kelpfish 349 
+	

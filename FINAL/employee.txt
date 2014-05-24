@@ -1,0 +1,10 @@
+5003 Lebron Toronto  905417  Stock  18
+5004 Kobe Brampton  657472  CustRep  22
+5005 Micheal  Toronto  456123  CustRep  21
+5006 Paul  Toronto  786578  Sales  19
+5007 Kevin  Scarbouough  905634  Cleaner  14
+5008 Rajon  Vaughan  647356  Cleaner  16
+5009 Deron  Brampton  416786  Sales  19
+5010 Mario  Scarborough  905876  Guide  15
+5011 Dwight  Kingston  587900  Cleaner  12
+5012 Larry  Aurora  785473  Manager  26
